@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { signUp, signIn } from "@/lib/auth/actions";
 import SocialProviders from "./SocialProviders";
 
 interface AuthFormProps {
   mode: "signup" | "signin";
 }
+
+const API_URL = "http://localhost:5000/api/auth"; // Express backend base URL
 
 export default function AuthForm({ mode }: AuthFormProps) {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
@@ -23,17 +24,25 @@ export default function AuthForm({ mode }: AuthFormProps) {
     setError(null);
 
     try {
-      const action = mode === "signup" ? signUp : signIn;
-      const result = await action(new FormData(e.currentTarget));
+      const endpoint =
+        mode === "signup" ? `${API_URL}/signup` : `${API_URL}/signin`;
 
-      if (result.ok) {
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
         router.push("/");
       } else {
-        setError(result.message || "Something went wrong");
+        setError(data.message || "Invalid credentials");
       }
     } catch (err) {
       console.error(err);
-      setError("Server error");
+      setError("Server error. Please try again later.");
     }
   };
 

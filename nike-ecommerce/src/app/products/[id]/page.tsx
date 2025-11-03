@@ -218,7 +218,7 @@ export default function ProductDetailPage() {
               Add to Bag
             </button>
 
-            {/* ✅ Favorite Button Clickable */}
+            {/*  Favorite Button Clickable */}
             <button
               onClick={handleFavorite}
               className={`w-[455px] h-[60px] border rounded-[30px] px-[20px] py-[18px] flex justify-center items-center gap-[10px] font-medium text-[16px] transition ${
