@@ -13,6 +13,10 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 
+app.get("/", (req, res) => {
+  res.send("Nike E-commerce Backend is running ✅");
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(` Express server running on http://localhost:${PORT}`);
