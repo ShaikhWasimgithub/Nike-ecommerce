@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: nike-ecommerce
+    env: node
+    rootDir: .
+    buildCommand: npm install
+    startCommand: npm run server
+    envVars:
+      - key: NODE_VERSION
+        value: 22.0.0
+    autoDeploy: true
+
